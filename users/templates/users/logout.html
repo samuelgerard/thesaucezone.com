@@ -1,0 +1,9 @@
+{% extends "blog/base.html" %} <!--extension of the base.html file/abstract-->
+{% block content %}  <!-- inheritance: overrides the block content on the abstract/template -->
+    <h2>You have been logged out</h2>
+        <div class="border-top pt-3">
+            <a href="{% url 'login' %}">Sign In Again</a>
+            </small>
+        </div>
+{% endblock content%}   
+

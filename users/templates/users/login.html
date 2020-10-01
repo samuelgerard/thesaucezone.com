@@ -1,0 +1,24 @@
+{% extends "blog/base.html" %} <!--extension of the base.html file/abstract-->
+{% load crispy_forms_tags %}
+{% block content %}  <!-- inheritance: overrides the block content on the abstract/template -->
+    <div class="content-section">
+        <form method="POST">
+            {% csrf_token %} <!--required-->
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Sign in</legend>
+                {{ form|crispy }}
+            </fieldset>
+            <div class="form-group">
+                <button class="btn btn-outline-info" type="submit">Login</button>
+                <small class="test-muted ml-2">
+                    <a href="{% url 'password_reset'%}">Forgot Password?</a>
+                </small>
+            </div>
+        </form>
+        <div class="border-top pt-3">
+            <small class="text-muted">Not Signed up?<a class="ml-2" href="{% url 'register' %}">Sign In</a>
+            </small>
+        </div>
+    </div>
+{% endblock content%}   
+

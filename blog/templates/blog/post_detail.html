@@ -1,0 +1,44 @@
+{% extends "blog/base.html" %} <!--extension of the base.html file/abstract-->
+{% block content %}  <!-- inheritance: overrides the block content on the abstract/template -->
+    <article class="media content-section">
+      <img class="rounded-circle article-img" src="{{ object.author.profile.image.url}}">
+        <div class="media-body">
+          <div class="article-metadata">
+            <a class="mr-2" href="{% url 'user-post' object.author.username %}">{{ object.author }}</a>
+            <!--string syntax on how to format the date-->
+            <small class="text-muted">{{ object.date_posted|date:"F d, Y" }}</small>
+            {% if object.author == user %}
+            <div>
+                <a class="btn btn-secondary btn-sm mb-1" href="{% url 'post-update' object.id %}">Update</a>
+                <a class="btn btn-danger btn-sm mb-1" href="{% url 'post-delete' object.id %}">Delete</a>
+            </div> 
+            {% endif %}
+          </div>
+          <h2 class="article-title">{{ post.title }}</h2>
+          <p class="article-content">{{ object.content }}</p>
+        </div>
+      </article>
+      <small>Add a new comment</small>
+      <form action="." method="POST">
+        {{ comment_form.as_p }}
+        {% csrf_token %}
+        <p><input type="submit" value="Add comment" ></p>
+      </form>
+      {% for comment in comments %}
+      <section class="media content-section">
+        <img class="rounded-circle article=img" src="{{ comment.name.profile.image.url }}">
+          <div class="media-body">
+              <div class="article-metadata">
+                {{ comment.name }} <small class="media-body text-muted">{{ comment.created_on|date:"F d, Y" }}</small>
+                <hr></hr>
+              </p>
+              <div class="comment-box">
+              {{ comment.body|linebreaks }}
+              </div>
+              </div>
+          </div>  
+        </section>
+    {% empty %}
+      <p class="text-muted mb-1">There are no comments yet.</p>
+    {% endfor %}
+{% endblock content%}   
